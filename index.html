@@ -1,46 +1,30 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
-    <title>EPSG:4326</title>
-    <link rel="stylesheet" href="https://openlayers.org/en/v5.3.0/css/ol.css" type="text/css">
-    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
-    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
-
+    <link rel="stylesheet" href="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 400px;
+        width: 100%;
+      }
+    </style>
+    <script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v5.3.0/build/ol.js"></script>
+    <title>OpenLayers example</title>
   </head>
   <body>
+    <h2>My Map</h2>
     <div id="map" class="map"></div>
-    <script>
-      import Map from 'ol/Map.js';
-      import View from 'ol/View.js';
-      import {defaults as defaultControls, ScaleLine} from 'ol/control.js';
-      import TileLayer from 'ol/layer/Tile.js';
-      import TileWMS from 'ol/source/TileWMS.js';
-
-
-      var layers = [
-        new TileLayer({
-          source: new TileWMS({
-            url: 'https://ahocevar.com/geoserver/wms',
-            params: {
-              'LAYERS': 'ne:NE1_HR_LC_SR_W_DR',
-              'TILED': true
-            }
-          })
-        })
-      ];
-
-      var map = new Map({
-        controls: defaultControls().extend([
-          new ScaleLine({
-            units: 'degrees'
-          })
-        ]),
-        layers: layers,
+    <script type="text/javascript">
+      var map = new ol.Map({
         target: 'map',
-        view: new View({
-          projection: 'EPSG:4326',
-          center: [0, 0],
-          zoom: 2
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          })
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([37.41, 8.82]),
+          zoom: 4
         })
       });
     </script>
